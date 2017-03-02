@@ -1,11 +1,14 @@
 YouTube-Downloader
 
-You can download a video or a playlist using this code
+You can download
 
-These are some letters that may be helpful - 
+1. Video or
+2. Playlist using this code
 
-up(u)
-down(d)
-Yes(y)
+To move
+
+1. Up - u or up
+2. Down - d or down
+3. Confirm - y or yes
 
 Enjoy !!

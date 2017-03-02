@@ -1,6 +1,33 @@
 import requests
 from bs4 import BeautifulSoup
 from pytube import YouTube
+import os
+
+
+def up_down(options):
+    final = ''
+    counter = 0
+    choices(options, counter)
+    while True:
+        ch = input()
+
+        if ch == 'd' or ch == 'down':
+            if counter == len(options)-1:
+                counter = 0
+            else:
+                counter += 1
+
+        elif ch == 'u' or ch == 'up':
+            if counter == 0:
+                counter = len(options)-1
+            else:
+                counter -= 1
+
+        elif ch == 'y' or ch == 'yes':
+            final = options[counter]
+            break
+        choices(options, counter)
+    return final
 
 
 def choices(options, opt):
@@ -18,23 +45,7 @@ def downloader(video_url):
     print('Which file format would you like to download for ',yt.filename)
 
     options = yt.get_videos()
-    counter = 0
-    choices(options, counter)
-    final = ''
-    while 1 == 1:
-        ch = input()
-
-        if ch == 'd':
-            counter += 1
-
-        elif ch == 'u':
-            counter -= 1
-
-        elif ch == 'y':
-            final = options[counter]
-            break
-        choices(options, counter)
-
+    final = up_down(options)
     final = str(final)
     final = final.split(' ')
     qual = final[-3]
@@ -42,7 +53,8 @@ def downloader(video_url):
     type = type[2:-1]
     print('Your video',yt.filename ,'has started to download in',qual,'quality')
     video = yt.get(type, resolution=qual)
-    video.download('')
+    ensure_dir('Downloads/')
+    video.download('Downloads/')
 
 
 def get_playlist(url):
@@ -52,13 +64,30 @@ def get_playlist(url):
     playlist = []
     for vid in soup.findAll(attrs={'class': 'playlist-video'}):
         playlist.append('https://www.youtube.com' + vid['href'])
-    return playlist
+    title = str((soup.findAll('h3', {'class':'playlist-title'})[0]).text)
+    title = (title.split('\n'))[1]
+    while True:
+        if title[0] == ' ':
+            title = title[1:]
+        elif title[-1] == ' ':
+            title = title[:-1]
+        else:
+            break
+
+    return playlist, title
+
+
+def ensure_dir(file_path):
+    directory = os.path.dirname(file_path)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
 
 def download_playlist(url):
-    playlist = get_playlist(url)
+    playlist, title = get_playlist(url)
     cnt = 0
     final = ''
-    print('Which file format would you like to download for ')
+    print('Which file format would you like to download ')
     for vid in playlist:
 
         yt = YouTube(vid)
@@ -66,41 +95,33 @@ def download_playlist(url):
 
         if cnt == 0:
             cnt += 1
-            counter = 0
-            choices(options, counter)
-
-            while 1 == 1:
-                ch = input()
-
-                if ch == 'd':
-                    counter += 1
-
-                elif ch == 'u':
-                    counter -= 1
-
-                elif ch == 'y':
-                    final = options[counter]
-                    break
-                choices(options, counter)
-
+            final = up_down(options)
             final = str(final)
             final = final.split(' ')
+
         qual = final[-3]
         type = final[-5]
         type = type[2:-1]
         print('Your video', yt.filename, 'has started to download in', qual, 'quality')
         video = yt.get(type, resolution=qual)
-        video.download('')
+
+        path = 'Playlist/'+title+'/'
+
+        ensure_dir(path)
+
+        video.download(path)
 
 
 print('YouTube Downloader\n')
-print('would you like to download\n1. song\n2. playlist')
 
-# options = ['song','playlist']
-ch = input()
 url = input('Enter the url : ')
 
-if ch == '1':
+options = ['Video','Playlist']
+final = up_down(options)
+
+if final == options[0]:
     downloader(url)
-else:
+elif final == options[1]:
     download_playlist(url)
+else:
+    print('wrong input')
