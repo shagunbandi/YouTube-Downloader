@@ -1,4 +1,5 @@
-# music/
-# video/
+music/
+.DS_Store
+video/
 .idea/markdown-navigator.xml
 __pycache__/
