@@ -1,4 +1,4 @@
-music/
-video/
+# music/
+# video/
 .idea/markdown-navigator.xml
 __pycache__/
