@@ -3,7 +3,7 @@ def up_down(options):
     counter = 0
     choices(options, counter)
     while True:
-        ch = input()
+        ch = input('u/d : ')
 
         if ch == 'd' or ch == 'down':
             if counter == len(options)-1:
