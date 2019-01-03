@@ -3,3 +3,6 @@ music/
 video/
 .idea/markdown-navigator.xml
 __pycache__/
+build/
+dist/
+YTD.spec

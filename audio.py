@@ -4,7 +4,7 @@ import youtube_dl
 
 def download_audio(url, playlist=False, quality='192'):
 	
-	outtmpl = 'music/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' if playlist else 'music/%(title)s.%(ext)s'
+	outtmpl = 'Music/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' if playlist else 'Music/%(title)s.%(ext)s'
 	ydl_opts = {
 		'format': 'bestaudio/best',
 		'outtmpl': outtmpl,

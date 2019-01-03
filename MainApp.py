@@ -3,7 +3,6 @@ from tkinter.ttk import *
 import youtube_dl
 import tkinter as tk
 
-from helper import up_down
 from audio import download_audio
 from video import download_video
 

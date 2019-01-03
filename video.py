@@ -4,7 +4,7 @@ import youtube_dl
 
 def download_video(url, playlist=False):
 
-	outtmpl = 'video/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' if playlist else 'video/%(title)s.%(ext)s'
+	outtmpl = 'Movies/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' if playlist else 'Movies/%(title)s.%(ext)s'
 	ydl_opts = {
 		'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4',
 		'outtmpl': outtmpl,
