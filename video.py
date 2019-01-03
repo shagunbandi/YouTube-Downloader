@@ -11,11 +11,15 @@ def download_video(url, playlist=False):
 		'noplaylist' : not playlist,
 	}
 
-	with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-		ydl.download([url])
+	try:
+		with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+			ydl.download([url])
+	except Exception as e:
+		print(e)
 
 
 if __name__ == "__main__":
 	url = 'https://www.youtube.com/watch?v=KtlgYxa6BMU'
 	# url = 'https://www.youtube.com/watch?v=_KhQT-LGb-4&list=PL4uUU2x5ZgR1JOlcY9SZB94MW6fBE8ovU'
 	download_video(url, playlist=True)
+	
